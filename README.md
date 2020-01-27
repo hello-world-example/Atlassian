@@ -1,11 +1,7 @@
-# Template-Hugo 
+# Leader 
 
 
 ```
-sed -i '' 's/Template-Hugo/_NewProject_/g' `grep Template-Hugo --include=\*.{md,html,xml,yaml} -rl .`
-
-git config user.email ykb553@163.com
-git config -l | grep user
 
 # 更新主题模块
 # git submodule add -f https://github.com/o-fork/hugo-book HuGo/themes/book
