@@ -4,15 +4,16 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content=""><meta property="og:title" content="Docs" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hello-world-example.github.io/Leader/docs/" />
+
 <title>Docs | Leader</title>
-
-
-<link rel="stylesheet" href="/Leader/book.min.79de1f7861b0c98f453c0a93bebf3608a280809e417787746c373699639900d7.css">
-
-
-
-
 <link rel="icon" href="/Leader/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/Leader/book.min.d436f463c9471cfab26a8b71cd2f50b6abf5225806391453da4ca111d1834fef.css" integrity="sha256-1Db0Y8lHHPqyaotxzS9Qtqv1IlgGORRT2kyhEdGDT&#43;8=">
 
 
 <link rel="alternate" type="application/rss+xml" href="https://hello-world-example.github.io/Leader/docs/index.xml" title="Leader" />
@@ -25,13 +26,14 @@ https://github.com/alex-shpak/hugo-book
 </head>
 
 <body>
-  <input type="checkbox" style="display: none" id="menu-control" />
-  <main class="flex container">
-
-    <aside class="book-menu fixed">
-      <nav>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
 <h2 class="book-brand">
-  <a href="https://hello-world-example.github.io/Leader/">Leader</a>
+  <a href="/Leader"><span>Leader</span>
+  </a>
 </h2>
 
 
@@ -39,28 +41,24 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-    
-  
-  
-  
 
-  <style>
-  nav ul a[href$="\2fLeader\2f docs\2f "] {
-      color: #004ed0;
-  }
-  </style>
 
+
+
+
+
+  <ul>
+<li>
+  <a href="/Leader/docs/Atlassian/"><strong>Atlassian..</strong></a>
 <ul>
-<li><p><a href="/Leader/">简介</a></p></li>
-
-<li><p><strong>示例</strong></p>
-
-<ul>
-<li><a href="/Leader/docs/with-toc/">默认带目录</a></li>
-<li><a href="/Leader/docs/without-toc/">设置不带目录</a></li>
-<li><a href="/Leader/docs/shortcodes/">特有功能</a><br /></li>
-</ul></li>
+<li>
+  <a href="/Leader/docs/Atlassian/Jira/JQL/"><strong>JIRA - JQL</strong></a></li>
 </ul>
+</li>
+</ul>
+
+
+
 
 
 
@@ -71,52 +69,92 @@ https://github.com/alex-shpak/hugo-book
 </nav>
 
 
-<script>
-(function() {
-  var menu = document.querySelector("aside.book-menu nav");
-  addEventListener("beforeunload", function(event) {
-    localStorage.setItem("menu.scrollTop", menu.scrollTop);
-  });
-  menu.scrollTop = localStorage.getItem("menu.scrollTop");
-})();
-</script>
 
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
     </aside>
 
     <div class="book-page">
-      <header class="flex align-center justify-between book-header">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/Leader/svg/menu.svg" alt="Menu" />
+    <img src="/Leader/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
+
   <strong>Docs</strong>
-</header>
 
-      
-<article class="markdown"></article>
-
-      
-<div class="book-footer justify-end">
-  
-  
-  <div>
-    
-  </div>
-  
+  <label for="toc-control">
+    <img src="/Leader/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+  </label>
 </div>
 
 
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
       
+  
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
 
     
+    <aside class="book-toc">
+      
   
 
-
-
+ 
+    </aside>
+    
   </main>
-  
-  
+
   
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

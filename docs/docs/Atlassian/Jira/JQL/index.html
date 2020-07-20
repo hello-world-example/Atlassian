@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JQL 基本概念 语法结构 -- fields(project) -- operator(=) -- value(&#34;TEST&#34;)  -- keyword(AND)  -- fields(assignee) -- operator(=) -- function(currentuser())  project = &#34;TEST&#34; AND assignee = currentuser() 保留字  space (&quot; &quot;) &#43; . , ; ? | * / % ^ $ # @ [ ] 这些字符是保留字 如果需要查询这些字符， 需要使用两个反斜杠转义  Fields ✔️    Advanced search reference - JQL fields  Search syntax for text fields    自定义字段 /secure/admin/ViewCustomFields."><meta property="og:title" content="" />
+<meta property="og:description" content="JQL 基本概念 语法结构 -- fields(project) -- operator(=) -- value(&#34;TEST&#34;)  -- keyword(AND)  -- fields(assignee) -- operator(=) -- function(currentuser())  project = &#34;TEST&#34; AND assignee = currentuser() 保留字  space (&quot; &quot;) &#43; . , ; ? | * / % ^ $ # @ [ ] 这些字符是保留字 如果需要查询这些字符， 需要使用两个反斜杠转义  Fields ✔️    Advanced search reference - JQL fields  Search syntax for text fields    自定义字段 /secure/admin/ViewCustomFields." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hello-world-example.github.io/Leader/docs/Atlassian/Jira/JQL/" />
+
+<title>J Q L | Leader</title>
+<link rel="icon" href="/Leader/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/Leader/book.min.d436f463c9471cfab26a8b71cd2f50b6abf5225806391453da4ca111d1834fef.css" integrity="sha256-1Db0Y8lHHPqyaotxzS9Qtqv1IlgGORRT2kyhEdGDT&#43;8=">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/Leader"><span>Leader</span>
+  </a>
+</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+  <a href="/Leader/docs/Atlassian/"><strong>Atlassian..</strong></a>
+<ul>
+<li>
+  <a href="/Leader/docs/Atlassian/Jira/JQL/"class=active><strong>JIRA - JQL</strong></a></li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/Leader/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>J Q L</strong>
+
+  <label for="toc-control">
+    <img src="/Leader/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jql">JQL</a>
+      <ul>
+        <li><a href="#基本概念">基本概念</a>
+          <ul>
+            <li><a href="#语法结构">语法结构</a></li>
+            <li><a href="#保留字">保留字</a></li>
+          </ul>
+        </li>
+        <li><a href="#fields-">Fields ✔️</a>
+          <ul>
+            <li><a href="#集合">集合</a></li>
+            <li><a href="#user">User</a></li>
+            <li><a href="#time">Time</a></li>
+            <li><a href="#agile">Agile</a></li>
+            <li><a href="#time-tracking-功能">time-tracking 功能</a></li>
+            <li><a href="#version">Version</a></li>
+            <li><a href="#jira-service-desk-许可">Jira Service Desk 许可</a></li>
+          </ul>
+        </li>
+        <li><a href="#operators-">Operators ✔️</a>
+          <ul>
+            <li><a href="#-历史记录搜索">❤ 历史记录搜索</a></li>
+          </ul>
+        </li>
+        <li><a href="#keywords-">Keywords ✔️</a></li>
+        <li><a href="#functions-">Functions ✔️</a>
+          <ul>
+            <li><a href="#user-1">User</a></li>
+            <li><a href="#time-1">Time</a></li>
+            <li><a href="#field">Field</a></li>
+            <li><a href="#agile-1">Agile</a></li>
+            <li><a href="#version-1">Version</a></li>
+            <li><a href="#jira-service-desk-许可-1">Jira Service Desk 许可</a></li>
+          </ul>
+        </li>
+        <li><a href="#常见用例">常见用例</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="jql">JQL</h1>
+<h2 id="基本概念">基本概念</h2>
+<h3 id="语法结构">语法结构</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- fields(project) 
+</span><span style="color:#75715e">-- operator(=) 
+</span><span style="color:#75715e">-- value(&#34;TEST&#34;) 
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">-- keyword(AND) 
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">-- fields(assignee) 
+</span><span style="color:#75715e">-- operator(=) 
+</span><span style="color:#75715e">-- function(currentuser())
+</span><span style="color:#75715e"></span>
+project <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TEST&#34;</span> <span style="color:#66d9ef">AND</span> assignee <span style="color:#f92672">=</span> currentuser()
+</code></pre></div><h3 id="保留字">保留字</h3>
+<ul>
+<li><code>space (&quot; &quot;) + . , ; ? | * / % ^ $ # @ [ ]</code> 这些字符是保留字</li>
+<li>如果需要查询这些字符， 需要使用两个反斜杠转义</li>
+</ul>
+<h2 id="fields-">Fields ✔️</h2>
+<blockquote>
+<ul>
+<li>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-fields/">Advanced search reference - JQL fields</a></li>
+<li>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/search-syntax-for-text-fields/">Search syntax for text fields</a></li>
+</ul>
+<blockquote>
+<ul>
+<li>自定义字段 /secure/admin/ViewCustomFields.jspa</li>
+</ul>
+</blockquote>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>project</strong></td>
+<td align="left">项目</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>projectType</del></td>
+<td align="left">项目类型</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>text</strong></td>
+<td align="left">匹配所有 text 类型的字段，如：summary、description、comments</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>summary</strong></td>
+<td align="left">主题</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>type / issueType</strong></td>
+<td align="left">任务类型</td>
+<td><em>/secure/admin/ViewIssueTypes.jspa</em></td>
+</tr>
+<tr>
+<td align="center"><strong>status</strong></td>
+<td align="left">任务状态</td>
+<td><em>/secure/admin/ViewStatuses.jspa</em></td>
+</tr>
+<tr>
+<td align="center"><strong>description</strong></td>
+<td align="left">问题描述信息</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>priority</strong></td>
+<td align="left">优先级</td>
+<td><em>/secure/admin/ViewPriorities.jspa</em></td>
+</tr>
+<tr>
+<td align="center">environment</td>
+<td align="left">环境</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>comment</strong></td>
+<td align="left">留言</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">component</td>
+<td align="left">模块，在项目管理里面自定义</td>
+<td><em>/plugins/servlet/project-config/{project}/components</em></td>
+</tr>
+<tr>
+<td align="center">attachments</td>
+<td align="left">附件</td>
+<td><code>attachments IS NOT EMPTY</code> 有附件的任务</td>
+</tr>
+<tr>
+<td align="center">category</td>
+<td align="left">类别</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">&ldquo;epic link&rdquo;</td>
+<td align="left"></td>
+<td><code>&quot;Epic Link&quot; = EMPTY</code></td>
+</tr>
+<tr>
+<td align="center"><strong>issueKey/id/issue/key</strong></td>
+<td align="left">issue ID 过滤</td>
+<td>issue in issueHistory()</td>
+</tr>
+<tr>
+<td align="center"><strong>issueLink[&ldquo;blocks&rdquo;]</strong></td>
+<td align="left">关联查询</td>
+<td><code>issueLink[&quot;is blocked by&quot;] = ABC-123</code></td>
+</tr>
+<tr>
+<td align="center"><strong>issueLinkType</strong></td>
+<td align="left">链接类型</td>
+<td><code>issueLinkType = &quot;is blocked by&quot;</code></td>
+</tr>
+<tr>
+<td align="center">labels</td>
+<td align="left">问题标签</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><em>level</em></td>
+<td align="left">问题安全等级</td>
+<td><em>/secure/admin/ViewIssueSecuritySchemes.jspa</em></td>
+</tr>
+<tr>
+<td align="center"><strong>parent</strong></td>
+<td align="left">子任务</td>
+<td><code>parent IN (Key)</code></td>
+</tr>
+<tr>
+<td align="center">resolution</td>
+<td align="left">解决结果</td>
+<td><em>/secure/admin/ViewResolutions.jspa</em></td>
+</tr>
+<tr>
+<td align="center">Rank</td>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="集合">集合</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>filter /request/savedFilter/searchRequest</strong></td>
+<td align="left">过滤器搜索</td>
+<td><code>filter IN (filterName1,filterName2)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="user">User</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>creator</strong></td>
+<td align="left">创建人</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>assignee</strong></td>
+<td align="left">经办人</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>reporter</strong></td>
+<td align="left">报告人</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">voter</td>
+<td align="left">投票人</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">votes</td>
+<td align="left">投票人数</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>watcher</strong></td>
+<td align="left">关注人</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>watchers</strong></td>
+<td align="left">关注人数</td>
+<td><code>watchers &gt; 5</code> 关注人数大于 5 个人的项目</td>
+</tr>
+</tbody>
+</table>
+<h3 id="time">Time</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><strong>created / createdDate</strong></td>
+<td align="left">创建时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">due / dueDate</td>
+<td align="left">到期时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">lastViewed</td>
+<td align="left">浏览时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>resolved / resolutionDate</strong></td>
+<td align="left">解决时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>updated / updatedDate</strong></td>
+<td align="left">更新时间</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="agile">Agile</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">sprint</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><strong>Rank</strong></td>
+<td align="left">用于在 Kanban 中，同一个泳道内进行拖拽排序、置顶、置底</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="time-tracking-功能">time-tracking 功能</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">originalEstimate / timeOriginalEstimate</td>
+<td align="left">原始时间估时</td>
+<td><code>originalEstimate &gt; 2d</code></td>
+</tr>
+<tr>
+<td align="center">remainingEstimate / timeEstimate</td>
+<td align="left">估时剩余</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">timeSpent</td>
+<td align="left">花费时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">workRatio</td>
+<td align="left">工作比率</td>
+<td>(timeSpent / originalEstimate) x 100</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version">Version</h3>
+<blockquote>
+<ul>
+<li>/plugins/servlet/project-config/{project}/versions</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">affectedVersion</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">fixVersion</td>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="jira-service-desk-许可">Jira Service Desk 许可</h3>
+<table>
+<thead>
+<tr>
+<th align="center">系统字段</th>
+<th align="left">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">approvals</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">change-control-type</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">organizations</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">request-channel-type</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">request-last-activity-time</td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>&lt;</code>your custom SLA name<code>&gt;</code></td>
+<td align="left"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="left"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="operators-">Operators ✔️</h2>
+<blockquote>
+<p>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-operators/">Advanced search reference - JQL operators</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">Operators</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>=</code>、<code>!=</code></td>
+<td align="center">等值</td>
+<td><code>reporter = currentUser() and assignee != currentUser()</code></td>
+</tr>
+<tr>
+<td align="center"><code>&gt;</code>、<code>&gt;=</code>、<code>&lt;</code>、<code>&lt;=</code>、</td>
+<td align="center">大小</td>
+<td><code>duedate &lt; now()</code>、<code>duedate &gt;= &quot;2008/12/31&quot;</code><br /><code>created &gt;= &quot;-5d&quot;</code>、<code>updated &lt;= &quot;-4w 2d&quot;</code></td>
+</tr>
+<tr>
+<td align="center"><code>IN</code>、 <code>NOT IN</code></td>
+<td align="center">多等值</td>
+<td><code>assignee not in (Jack,Jill,John)</code> <br /><code>assignee in (membersOf(组))</code></td>
+</tr>
+<tr>
+<td align="center"><code>~</code>、<code>!~</code></td>
+<td align="center">包含</td>
+<td>用于 Summary、Description、Comments、自定义 Text 字段 等<br /><code>summary ~ frame</code> ：匹配 frame <br /> <code>summary ~ &quot;frame*&quot;</code>：匹配 framework、frame 等<br /><code>summary ~ &quot;issue collector&quot;</code>：匹配 issue AND collector<br /><code>summary ~ &quot;\&quot;full screen\&quot;&quot;</code> ：全词匹配</td>
+</tr>
+<tr>
+<td align="center"><code>IS</code> 、<code>IS NOT</code></td>
+<td align="center">空值</td>
+<td><code>fixVersion is empty</code>、 <code>fixVersion is null</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="-历史记录搜索">❤ 历史记录搜索</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Keywords</th>
+<th align="center">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>WAS</code>、<code>WAS NOT</code></td>
+<td align="center"><strong>以前</strong> 有过指定值</td>
+</tr>
+<tr>
+<td align="center"><code>WAS IN</code>、<code>WAS NOT IN</code></td>
+<td align="center"><strong>以前</strong> 有过一匹值</td>
+</tr>
+<tr>
+<td align="center"><code>CHANGED</code></td>
+<td align="center"><strong>以前</strong> 字段修改过</td>
+</tr>
+</tbody>
+</table>
+<p><strong>支持的字段</strong></p>
+<ul>
+<li><code>Status</code> ： 状态</li>
+<li><code>Assignee</code> ：经办人</li>
+<li><code>Reporter</code> ：  报告人</li>
+<li><code>Resolution</code>： 解决结果</li>
+<li><code>Priority</code> ： 优先级</li>
+<li>fixVersion ：修复的版本</li>
+</ul>
+<p><strong>谓词</strong></p>
+<ul>
+<li><code>ON &quot;date&quot;</code> ：  在指定时间的历史</li>
+<li><code>AFTER &quot;date&quot;</code> ： 在指定时间 <strong>之后</strong> 的历史</li>
+<li><code>BEFORE &quot;date&quot;</code> ：在指定时间 <strong>之前</strong> 的历史</li>
+<li><code>DURING (&quot;date1&quot;,&quot;date2&quot;)</code> ： 在指定时间 <strong>之间</strong> 的历史</li>
+<li><code>BY &quot;username&quot;</code> or <code> BY (username1,username2)</code> ： 历史被谁修改</li>
+<li>CHANGED 独有，从什么变为什么
+<ul>
+<li><code>FROM &quot;oldvalue&quot;</code></li>
+<li><code>TO &quot;newvalue&quot;</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>示例</strong></p>
+<ul>
+<li><code>status WAS IN (&quot;Resolved&quot;,&quot;In Progress&quot;)</code> 状态曾经经历过 Resolved、 In Progress</li>
+<li><code>status IN (Done,Closed) AND status WAS NOT IN (&quot;In Progress&quot;)</code> ：状态直接从 TODO 变成 Done</li>
+<li><code>status WAS &quot;Resolved&quot; BY kail BEFORE &quot;2019/02/02&quot;</code> ： 在 2019/02/02 之前 被 kail 改为解决</li>
+<li><code>status CHANGED FROM &quot;In Progress&quot; TO &quot;Open&quot;</code> 状态曾经从 &ldquo;In Progress&rdquo; 改为 &ldquo;Open&rdquo;</li>
+</ul>
+<h2 id="keywords-">Keywords ✔️</h2>
+<blockquote>
+<p>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-keywords/">Advanced search reference - JQL keywords</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">Keywords</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>AND</code></td>
+<td align="center">且</td>
+<td><code>project = &quot;New office&quot; and status = &quot;open&quot;</code><br /></td>
+</tr>
+<tr>
+<td align="center"><code>OR</code></td>
+<td align="center">或</td>
+<td><code>(duedate &lt; now() or duedate is empty) AND project = &quot;New office&quot;</code></td>
+</tr>
+<tr>
+<td align="center"><code>NOT</code></td>
+<td align="center">非</td>
+<td><code>not assignee = jsmith</code></td>
+</tr>
+<tr>
+<td align="center"><code>EMPTY</code></td>
+<td align="center">字段无值</td>
+<td><code>duedate is empty</code> 、 <code>duedate is not empty</code> 、<code>duedate = empty</code></td>
+</tr>
+<tr>
+<td align="center"><code>NULL</code></td>
+<td align="center">同 <code>NULL</code></td>
+<td>同 <code>NULL</code></td>
+</tr>
+<tr>
+<td align="center"><code>ORDER BY</code></td>
+<td align="center">排序</td>
+<td><code>duedate = empty order by created asc, priority desc</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="functions-">Functions ✔️</h2>
+<blockquote>
+<p>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-functions/">Advanced search reference - JQL functions</a></p>
+</blockquote>
+<h3 id="user-1">User</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>currentUser()</code></td>
+<td align="center"><strong>当前用户</strong></td>
+<td><code>assignee = currentUser()</code></td>
+</tr>
+<tr>
+<td align="center"><code>membersOf(group)</code></td>
+<td align="center"><strong>组内的用户</strong></td>
+<td><code>assignee = membersOf(&quot;group&quot;)</code></td>
+</tr>
+<tr>
+<td align="center"><code>updatedBy(user, [dateFrom, dateTo])</code></td>
+<td align="center">被谁更新了</td>
+<td><code>issuekey IN updatedBy(jsmith)</code></td>
+</tr>
+<tr>
+<td align="center"><code>projectsLeadByUser(username)</code></td>
+<td align="center">项目负责人</td>
+<td><code>project in projectsLeadByUser()</code></td>
+</tr>
+<tr>
+<td align="center"><code>componentsLeadByUser(username)</code></td>
+<td align="center">模块负责人</td>
+<td><code>component in componentsLeadByUser(user)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="time-1">Time</h3>
+<blockquote>
+<ul>
+<li><code>+1d</code> 明天</li>
+<li><code>-1d</code> 昨天</li>
+<li><code>yyyy/MM/dd HH:mm</code>、 <code>yyyy-MM-dd HH:mm</code> 、<code>yyyy/MM/dd</code>、<code>yyyy-MM-dd</code></li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>currentLogin()</code></td>
+<td align="center">当前登录时间</td>
+<td><code>created &gt; currentLogin()</code> 在当前登录的 Session 期间创建的问题</td>
+</tr>
+<tr>
+<td align="center"><code>lastLogin()</code></td>
+<td align="center">最后登录时间</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>now()</code></td>
+<td align="center"><strong>当前时间</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>startOfDay()</code><br /><code>startOfWeek()</code><br /><code>startOfMonth()</code><br /><code>startOfYear()</code></td>
+<td align="center"><strong>开始时间</strong><br /><code>(+/-)(y|M|w|d|h|m)</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>endOfDay()</code><br /><code>endOfWeek()</code><br /><code>endOfMonth()</code><br /><code>endOfYear()</code></td>
+<td align="center"><strong>结束时间</strong><br /><code>(+/-)(y|M|w|d|h|m)</code></td>
+<td><code>due &lt; endOfDay()</code> <br /><code>due &lt; endOfDay(&quot;+1&quot;)</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="field">Field</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>linkedIssues(issueKey,[LinkType])</code></td>
+<td align="center"><strong>链接的问题</strong></td>
+<td><code>issue in linkedIssues(ABC-123,&quot;is duplicated by&quot;)</code></td>
+</tr>
+<tr>
+<td align="center"><code>cascadeOption(parentOption)</code><br /><code>cascadeOption(parentOption,child)</code></td>
+<td align="center">级联筛选</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>standardIssueTypes()</code></td>
+<td align="center"><strong>查找主任务</strong></td>
+<td><code>issuetype in standardIssueTypes()</code></td>
+</tr>
+<tr>
+<td align="center"><code>subtaskIssueTypes()</code></td>
+<td align="center"><strong>查找子任务</strong></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>projectsWhereUserHasPermission()</code></td>
+<td align="center">有指定权限的项目</td>
+<td><code>project in projectsWhereUserHasPermission(&quot;Resolve Issues&quot;)</code></td>
+</tr>
+<tr>
+<td align="center"><code>projectsWhereUserHasRole()</code></td>
+<td align="center">有指定角色的项目</td>
+<td><code>project in projectsWhereUserHasRole(&quot;Developers&quot;)</code></td>
+</tr>
+<tr>
+<td align="center"><code>issueHistory()</code></td>
+<td align="center">最近查看过的问题</td>
+<td><code>issue in issueHistory() AND assignee = currentUser()</code></td>
+</tr>
+<tr>
+<td align="center">issuesWithRemoteLinksByGlobalId()</td>
+<td align="center">？？</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>votedIssues()</code></td>
+<td align="center">我投票的问题</td>
+<td><code>issue in votedIssues()</code></td>
+</tr>
+<tr>
+<td align="center"><code>watchedIssues()</code></td>
+<td align="center"><strong>我关注的问题</strong></td>
+<td><code>issue in watchedIssues()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="agile-1">Agile</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>openSprints()</code></td>
+<td align="center">已开始未结束的 Sprint</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><code>closedSprints()</code></td>
+<td align="center">已完成 Sprint</td>
+<td><code>sprint in closedSprints()</code></td>
+</tr>
+<tr>
+<td align="center"><code>futureSprints()</code></td>
+<td align="center">尚未开始的 Sprint</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>parentEpic()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-1">Version</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">earliestUnreleasedVersion()</td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">latestReleasedVersion()</td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">releasedVersions()</td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center">unreleasedVersions()</td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="jira-service-desk-许可-1">Jira Service Desk 许可</h3>
+<table>
+<thead>
+<tr>
+<th align="center">Functions</th>
+<th align="center">简介</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><del>approved()</del></td>
+<td align="center">被批准</td>
+<td><code>approval = approved()</code></td>
+</tr>
+<tr>
+<td align="center"><del>approver(user,user)</del></td>
+<td align="center">批准人</td>
+<td><code>approval = approver(jsmith,skhan)</code></td>
+</tr>
+<tr>
+<td align="center"><del>breached()</del></td>
+<td align="center">未达标 SLA <br />Service Level Agreement 服务级别协议</td>
+<td><code>&quot;Time to First Response&quot; = breached()</code></td>
+</tr>
+<tr>
+<td align="center"><del>completed()</del></td>
+<td align="center">已完成 SLA</td>
+<td><code>&quot;Time to First Response&quot; = completed()</code></td>
+</tr>
+<tr>
+<td align="center"><del>elapsed()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>everbreached()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>myApproval()</del></td>
+<td align="center">需要批准的问题</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>myPending()</del></td>
+<td align="center">需要我批准</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>organizationMembers()</del></td>
+<td align="center">组织内的用户</td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>paused()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>pending()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>pendingBy()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>remaining()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>running()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td align="center"><del>withinCalendarHours()</del></td>
+<td align="center"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见用例">常见用例</h2>
+<ul>
+<li><code>issue in linkedIssues(BC-740)</code> ： 链接到某个任务的任务</li>
+<li><code>issuetype in standardIssueTypes()</code> ： 标准问题类型</li>
+<li><code>issuetype in subtaskIssueTypes()</code> ： 子任务类型</li>
+<li><code>assignee in (membersOf(xx)) AND status in (ToDo,&quot;To Do&quot;,&quot;In Progress&quot;) AND 预计完成日期 &lt; startOfDay()</code> ： 超期的任务</li>
+</ul>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li>
+  <a href="https://www.atlassian.com/zh/software/jira/guides/expand-jira/jql">高级搜索 和  JQL 入门</a></li>
+<li>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/use-advanced-search-with-jira-query-language-jql/">Use advanced search with Jira Query Language (JQL)</a></li>
+<li>
+  <a href="https://support.atlassian.com/jira-software-cloud/docs/search-syntax-for-text-fields/">Search syntax for text fields</a></li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex justify-between">
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hello-world-example/Leader/edit/master/HuGo/content/docs/Atlassian/Jira/JQL.md" target="_blank" rel="noopener">
+      <img src="/Leader/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>Edit this page</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jql">JQL</a>
+      <ul>
+        <li><a href="#基本概念">基本概念</a>
+          <ul>
+            <li><a href="#语法结构">语法结构</a></li>
+            <li><a href="#保留字">保留字</a></li>
+          </ul>
+        </li>
+        <li><a href="#fields-">Fields ✔️</a>
+          <ul>
+            <li><a href="#集合">集合</a></li>
+            <li><a href="#user">User</a></li>
+            <li><a href="#time">Time</a></li>
+            <li><a href="#agile">Agile</a></li>
+            <li><a href="#time-tracking-功能">time-tracking 功能</a></li>
+            <li><a href="#version">Version</a></li>
+            <li><a href="#jira-service-desk-许可">Jira Service Desk 许可</a></li>
+          </ul>
+        </li>
+        <li><a href="#operators-">Operators ✔️</a>
+          <ul>
+            <li><a href="#-历史记录搜索">❤ 历史记录搜索</a></li>
+          </ul>
+        </li>
+        <li><a href="#keywords-">Keywords ✔️</a></li>
+        <li><a href="#functions-">Functions ✔️</a>
+          <ul>
+            <li><a href="#user-1">User</a></li>
+            <li><a href="#time-1">Time</a></li>
+            <li><a href="#field">Field</a></li>
+            <li><a href="#agile-1">Agile</a></li>
+            <li><a href="#version-1">Version</a></li>
+            <li><a href="#jira-service-desk-许可-1">Jira Service Desk 许可</a></li>
+          </ul>
+        </li>
+        <li><a href="#常见用例">常见用例</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
