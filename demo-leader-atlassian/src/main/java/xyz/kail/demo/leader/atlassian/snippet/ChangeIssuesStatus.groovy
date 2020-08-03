@@ -37,7 +37,7 @@ workflowTransitionUtil.setUserkey("kaibin.yang")
 // 指定 转换(ID)
 workflowTransitionUtil.setAction(44)
 
-// 修改后的状态
+// 执行的是哪一步状态
 ActionDescriptor actionDescriptor = workflowTransitionUtil.getActionDescriptor()
 return actionDescriptor
 
