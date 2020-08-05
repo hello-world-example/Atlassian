@@ -17,30 +17,34 @@ Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
  * 父项目关闭时，关闭所有子项目
  */
 
-WorkflowTransitionUtil workflowTransitionUtil = (WorkflowTransitionUtil) JiraUtils.loadComponent(WorkflowTransitionUtilImpl.class)
-
 IssueType typeObject = issue.getIssueTypeObject()
 
 // 是主任务 (不是子任务)
-if (!typeObject.subTask) {
-    // 并且有项目看板标签
-    if (issue.labels.collect { it.label }.contains("项目看板")) {
-        Collection<Issue> issues = issue.subTaskObjects
-        for (Issue sub in issues) {
-            IssueImpl subIssueImpl = (IssueImpl) sub
+if (typeObject.subTask) {
+    return
+}
+// 并且有项目看板标签
+if (!issue.labels.collect { it.label }.contains("项目看板")) {
+    return
+}
 
-            // 指定任务
-            workflowTransitionUtil.setIssue(subIssueImpl)
-            // 指定操作人
-            workflowTransitionUtil.setUserkey("kaibin.yang")
-            // 指定 转换(ID) Done (41)
-            workflowTransitionUtil.setAction(41)
 
-            // 校验和执行
-            workflowTransitionUtil.validate()
-            workflowTransitionUtil.progress()
-        }
-    }
+WorkflowTransitionUtil workflowTransitionUtil = (WorkflowTransitionUtil) JiraUtils.loadComponent(WorkflowTransitionUtilImpl.class)
+
+Collection<Issue> issues = issue.subTaskObjects
+for (Issue sub in issues) {
+    IssueImpl subIssueImpl = (IssueImpl) sub
+
+    // 指定任务
+    workflowTransitionUtil.setIssue(subIssueImpl)
+    // 指定操作人
+    workflowTransitionUtil.setUserkey("auto.robot")
+    // 指定 转换(ID) 直接关闭 (81)
+    workflowTransitionUtil.setAction(81)
+
+    // 校验和执行
+    workflowTransitionUtil.validate()
+    workflowTransitionUtil.progress()
 }
 
 
