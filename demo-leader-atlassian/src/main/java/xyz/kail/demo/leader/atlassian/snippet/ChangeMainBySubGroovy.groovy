@@ -1,5 +1,6 @@
 package xyz.kail.demo.leader.atlassian.snippet
 
+
 /**
  * 根据子任务更新父任务状态
  */
@@ -18,7 +19,7 @@ Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 
 
 // 默认操作人
-final String OPT_KEY = "kaibin.yang"
+final String OPT_KEY = "auto.robot"
 // 父项目标签检测
 final String LABEL_CHECK = "项目看板"
 
@@ -27,8 +28,8 @@ if (issue.subTask) {
     if (LABEL_CHECK != "" && !issue.parentObject.labels.collect { it.label }.contains(LABEL_CHECK)) {
         return
     }
-    // 父任务状态已经结束  /secure/admin/ViewStatuses.jspa
-    if (StatusFlowEnum.isEnd(issue.parentObject.statusObject.id)) {
+    // 父任务状态已经结束
+    if (MainStatusEnum.isEnd(issue.parentObject.statusObject.id)) {
         return
     }
 
@@ -47,7 +48,7 @@ if (issue.subTask) {
 /**
  * 状态页面： /secure/admin/ViewStatuses.jspa
  */
-enum StatusFlowEnum {
+enum MainStatusEnum {
 
     BACKLOG("10000", "To Do", 41, ""),
     ANALYZE("10004", "分析中", 51, ""),
@@ -58,14 +59,14 @@ enum StatusFlowEnum {
     CHECK_WAIT("10007", "待验收", 101, ""),
     CHECK("10008", "验收中", 111, ""),
     DONE("10002", "完成", null, ""),
-    CLOSED("6", "关闭", null, "")
+    CLOSED("6", "已关闭", null, "")
 
     String status
     String statusDesc
     Integer step
     String stepDesc
 
-    StatusFlowEnum(String status, String statusDesc, Integer step, String stepDesc) {
+    MainStatusEnum(String status, String statusDesc, Integer step, String stepDesc) {
         this.status = status
         this.statusDesc = statusDesc
         this.step = step
@@ -79,12 +80,6 @@ enum StatusFlowEnum {
         return DONE.status == status || CLOSED.status == status
     }
 
-    /**
-     * 任务是否 在进行中（子任务）
-     */
-    static boolean isDoing(String status) {
-        return DEV.status == status
-    }
 
     static Map<String, Integer> getWorkflow() {
         Map<String, Integer> workflow = new LinkedHashMap<>()
@@ -101,14 +96,48 @@ enum StatusFlowEnum {
     }
 }
 
+/**
+ * 状态页面： /secure/admin/ViewStatuses.jspa
+ */
+enum SubStatusEnum {
+
+    TODO("10000", "To Do"),
+    IN_PROGRESS("3", "进行中"),
+    DONE("10002", "完成"),
+    CLOSED("6", "已关闭")
+
+    String status
+    String statusDesc
+
+    SubStatusEnum(String status, String statusDesc) {
+        this.status = status
+        this.statusDesc = statusDesc
+    }
+
+
+    /**
+     * 任务是否 在进行中（子任务）
+     */
+    static boolean isDoing(String status) {
+        return IN_PROGRESS.status == status
+    }
+
+    /**
+     * 任务是否 已结束（子任务）
+     */
+    static boolean isEnd(String status) {
+        return DONE.status == status || CLOSED.status == status
+    }
+
+}
+
 //return KeyEnum.matchOne(["12", "34"] as String[], "23") // > false
 //return KeyEnum.matchOne(["12", "34"] as String[], "12") // > true
 //return KeyEnum.matchOne(["12", "34"] as String[], "23") // > false
 //return KeyEnum.matchOne(["12", "34"] as String[], null) // > false
 enum KeyEnum {
 
-    ANALYZE(["需求分析", "调研"] as String[]),
-    PRD(["移交", "串讲", "评审"] as String[]),
+    ANALYZE(["需求分析", "调研", "移交", "串讲", "评审"] as String[]),
     DEV(["开发", "连调"] as String[]),
     TEST(["测试", "自测"] as String[]),
     ONLINE(["上线"] as String[])
@@ -160,26 +189,26 @@ static def computeStatusByIssue(Issue issue) {
     String statusShould = null
 
     // 子任务状态变为 (开发中)，【存在进行中状态】
-    if (StatusFlowEnum.isDoing(issueStatus.id)) {
+    if (SubStatusEnum.isDoing(issueStatus.id)) {
         if (KeyEnum.ANALYZE.match(issueSummary)) {
-            statusShould = StatusFlowEnum.ANALYZE.status
+            statusShould = MainStatusEnum.ANALYZE.status
         } else if (KeyEnum.DEV.match(issueSummary)) {
-            statusShould = StatusFlowEnum.DEV.status
+            statusShould = MainStatusEnum.DEV.status
         } else if (KeyEnum.TEST.match(issueSummary)) {
-            statusShould = StatusFlowEnum.TEST.status
+            statusShould = MainStatusEnum.TEST.status
         }
     }
 
     // 子任务状态变为 (完成、已关闭)，判断指定关键字【是否都已关闭】
-    if (StatusFlowEnum.isEnd(issueStatus.id)) {
-        if (KeyEnum.PRD.match(issueSummary) && allDone(KeyEnum.PRD.keys, subIssues)) {
-            statusShould = StatusFlowEnum.DEV_WAIT.status
+    if (SubStatusEnum.isEnd(issueStatus.id)) {
+        if (KeyEnum.ANALYZE.match(issueSummary) && allDone(KeyEnum.ANALYZE.keys, subIssues)) {
+            statusShould = MainStatusEnum.DEV_WAIT.status
         } else if (KeyEnum.DEV.match(issueSummary) && allDone(KeyEnum.DEV.keys, subIssues)) {
-            statusShould = StatusFlowEnum.TEST_WAIT.status
+            statusShould = MainStatusEnum.TEST_WAIT.status
         } else if (KeyEnum.TEST.match(issueSummary) && allDone(KeyEnum.TEST.keys, subIssues)) {
-            statusShould = StatusFlowEnum.CHECK_WAIT.status
+            statusShould = MainStatusEnum.CHECK_WAIT.status
         } else if (KeyEnum.ONLINE.match(issueSummary) && allDone(KeyEnum.ONLINE.keys, subIssues)) {
-            statusShould = StatusFlowEnum.DONE.status
+            statusShould = MainStatusEnum.DONE.status
         }
     }
 
@@ -228,7 +257,7 @@ static def findStatusStep(String source, String target) {
         return flowStep
     }
 
-    Map<String, Integer> workflow = StatusFlowEnum.workflow
+    Map<String, Integer> workflow = MainStatusEnum.workflow
 
     // 状态 ID 不匹配
     if (!workflow.containsKey(source) || !workflow.containsKey(target)) {
@@ -252,7 +281,7 @@ static def findStatusStep(String source, String target) {
 }
 
 /**
- * 指定关键字的子任务是否都已经 Done(10002) 或 Closed(5)
+ * 指定关键字的子任务是否都已经 Done 或 Closed
  * @param keys 逗号分割的字符串
  * @param subIssues 子任务
  * @return true/false
@@ -273,12 +302,10 @@ static def allDone(String[] keys, Collection<Issue> subIssues) {
         return false
     }
     for (Issue subIssue : matchIssues) {
-        if (!StatusFlowEnum.isEnd(subIssue.statusObject.id)) {
+        if (!SubStatusEnum.isEnd(subIssue.statusObject.id)) {
             // 指定的 子任务 是 非结束状态
             return false
         }
     }
     return true
 }
-
-
