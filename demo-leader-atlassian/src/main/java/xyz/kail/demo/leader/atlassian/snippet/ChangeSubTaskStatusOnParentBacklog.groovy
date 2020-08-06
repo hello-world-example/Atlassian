@@ -34,10 +34,10 @@ for (Issue sub in issues) {
 
 enum ResetStatusEnum {
 
-    TO_DO("10000", "BackLog", 11, "开始"),
-    IN_PROGRESS("3", "开发中", 91, "Done"),
-    DONE("10002", "完成", 101, "Close"),
-    CLOSED("6", "已关闭", 111, "打开")
+    TO_DO("10000", "TO DO", 11, "开始"),
+    IN_PROGRESS("3", "进行中", 41, "完成"),
+    DONE("10001", "DONE", 71, "关闭"),
+    CLOSED("6", "关闭", 111, "打开")
 
     String status
     String statusDesc
