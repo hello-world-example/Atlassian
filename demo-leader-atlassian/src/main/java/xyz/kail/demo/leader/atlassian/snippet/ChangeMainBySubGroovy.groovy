@@ -253,7 +253,7 @@ static def changeIssueStatus(Issue issue, List<Integer> flowStep, String userKey
 // return findStatusStep("10004", "10000") //  》 []
 static def findStatusStep(String source, String target) {
     List<Integer> flowStep = new ArrayList<>()
-    if (null == source || null == target) {
+    if (null == source || null == target || source == target) {
         return flowStep
     }
 

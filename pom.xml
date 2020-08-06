@@ -11,6 +11,7 @@
     <modules>
         <module>demo-leader-atlassian</module>
         <module>demo-leader-atlassian-agent</module>
+        <module>demo-leader-scriptrunner-samples</module>
     </modules>
 
 

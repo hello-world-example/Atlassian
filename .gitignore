@@ -2,3 +2,15 @@ target
 *.iml
 .idea
 HuGo/themes/book
+
+.idea/
+/node/
+lib
+node_modules
+.gradle
+build
+/docs/build
+/docs/.cache
+/docs/target
+.bundle
+target/
