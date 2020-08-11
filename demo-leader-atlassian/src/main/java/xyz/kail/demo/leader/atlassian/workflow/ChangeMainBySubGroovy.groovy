@@ -14,14 +14,19 @@ import com.atlassian.jira.workflow.WorkflowTransitionUtil
 import com.atlassian.jira.workflow.WorkflowTransitionUtilImpl
 
 // region 代码提示
-Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion
 
 
 // 默认操作人
 final String OPT_KEY = "auto.robot"
-// 父项目标签检测
-final String LABEL_CHECK = "项目看板"
+// 父项目标签检测（空字符串时不检测）
+final String LABEL_CHECK = ""
+
+// 不自动修改状态的项目
+if (["AUTOTEST"].contains(issue.projectObject.key)) {
+    return
+}
 
 // 子任务
 if (issue.subTask) {
@@ -51,15 +56,15 @@ if (issue.subTask) {
 enum MainStatusEnum {
 
     BACKLOG("10000", "To Do", 41, ""),
-    ANALYZE("10004", "分析中", 51, ""),
-    DEV_WAIT("10003", "待开发", 251, ""),
-    DEV("3", "开发中", 261, ""),
-    TEST_WAIT("10005", "待测试", 271, ""),
-    TEST("10006", "测试中", 281, ""),
-    CHECK_WAIT("10007", "待验收", 101, ""),
-    CHECK("10008", "验收中", 111, ""),
-    DONE("10002", "完成", null, ""),
-    CLOSED("6", "已关闭", null, "")
+    ANALYZE("10500", "分析中", 51, ""),
+    DEV_WAIT("10501", "待开发", 61, ""),
+    DEV("10204", "开发中", 71, ""),
+    TEST_WAIT("10502", "待测试", 81, ""),
+    TEST("10205", "测试中", 101, ""),
+    CHECK_WAIT("10503", "待验收", 111, ""),
+    CHECK("10504", "验收中", 121, ""),
+    DONE("10001", "Done", null, ""),
+    CLOSED("10407", "关闭", null, "")
 
     String status
     String statusDesc
@@ -103,8 +108,8 @@ enum SubStatusEnum {
 
     TODO("10000", "To Do"),
     IN_PROGRESS("3", "进行中"),
-    DONE("10002", "完成"),
-    CLOSED("6", "已关闭")
+    DONE("10001", "Done"),
+    CLOSED("6", "关闭")
 
     String status
     String statusDesc
