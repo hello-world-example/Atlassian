@@ -1,5 +1,8 @@
 package xyz.kail.demo.leader.atlassian.fields
 
+/**
+ * Bug 数统计
+ */
 
 import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.Issue

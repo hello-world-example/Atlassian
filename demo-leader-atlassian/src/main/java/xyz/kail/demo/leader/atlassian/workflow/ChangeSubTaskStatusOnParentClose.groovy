@@ -1,4 +1,4 @@
-package xyz.kail.demo.leader.atlassian.snippet
+package xyz.kail.demo.leader.atlassian.workflow
 
 import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.Issue

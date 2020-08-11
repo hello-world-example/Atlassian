@@ -1,4 +1,4 @@
-package xyz.kail.demo.leader.atlassian.snippet
+package xyz.kail.demo.leader.atlassian.workflow
 
 
 /**
