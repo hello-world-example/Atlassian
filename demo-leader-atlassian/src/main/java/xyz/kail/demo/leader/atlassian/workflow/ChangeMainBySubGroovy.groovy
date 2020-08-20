@@ -5,7 +5,6 @@ package xyz.kail.demo.leader.atlassian.workflow
  * 根据子任务更新父任务状态
  */
 
-import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.Issue
 import com.atlassian.jira.issue.IssueImpl
 import com.atlassian.jira.issue.status.Status
@@ -44,8 +43,17 @@ if (issue.subTask) {
         return
     }
 
+    // 当前状态
+    def currentStatus = issue.parentObject.statusObject.id
+
+    // 【状态限制】如果要转换为 "测试中"，起始状态必须是 "待测试"
+    if (MainStatusEnum.TEST.status == statusShould && MainStatusEnum.TEST_WAIT.status != currentStatus) {
+        return
+    }
+
     // 计算 parentStatus 和 需要变更的状态之间需要经历几步
-    List<Integer> flowStep = findStatusStep(issue.parentObject.statusObject.id, statusShould)
+    List<Integer> flowStep = findStatusStep(currentStatus, statusShould)
+
     // 修改父任务状态
     changeIssueStatus(issue.parentObject, flowStep, OPT_KEY)
 }
