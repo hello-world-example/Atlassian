@@ -65,6 +65,7 @@ enum MainStatusEnum {
 
     BACKLOG("10000", "To Do", 41, ""),
     ANALYZE("10500", "分析中", 51, ""),
+    REVIEW_WAIT("10507", "待移交", 221, ""),
     DEV_WAIT("10501", "待开发", 61, ""),
     DEV("10204", "开发中", 71, ""),
     TEST_WAIT("10502", "待测试", 81, ""),
@@ -98,6 +99,7 @@ enum MainStatusEnum {
         Map<String, Integer> workflow = new LinkedHashMap<>()
         workflow.put(BACKLOG.status, BACKLOG.step)
         workflow.put(ANALYZE.status, ANALYZE.step)
+        workflow.put(REVIEW_WAIT.status, REVIEW_WAIT.step)
         workflow.put(DEV_WAIT.status, DEV_WAIT.step)
         workflow.put(DEV.status, DEV.step)
         workflow.put(TEST_WAIT.status, TEST_WAIT.step)
@@ -150,7 +152,8 @@ enum SubStatusEnum {
 //return KeyEnum.matchOne(["12", "34"] as String[], null) // > false
 enum KeyEnum {
 
-    ANALYZE(["需求分析", "调研", "移交", "串讲", "评审"] as String[]),
+    ANALYZE(["需求分析", "调研", "设计"] as String[]),
+    REVIEW(["串讲", "移交", "评审"] as String[]),
     DEV(["开发", "连调"] as String[]),
     TEST(["测试", "自测"] as String[]),
     ONLINE(["上线"] as String[])
@@ -205,6 +208,8 @@ static def computeStatusByIssue(Issue issue) {
     if (SubStatusEnum.isDoing(issueStatus.id)) {
         if (KeyEnum.ANALYZE.match(issueSummary)) {
             statusShould = MainStatusEnum.ANALYZE.status
+        } else if (KeyEnum.REVIEW.match(issueSummary)) {
+            statusShould = MainStatusEnum.REVIEW_WAIT.status
         } else if (KeyEnum.DEV.match(issueSummary)) {
             statusShould = MainStatusEnum.DEV.status
         } else if (KeyEnum.TEST.match(issueSummary)) {
@@ -215,6 +220,8 @@ static def computeStatusByIssue(Issue issue) {
     // 子任务状态变为 (完成、已关闭)，判断指定关键字【是否都已关闭】
     if (SubStatusEnum.isEnd(issueStatus.id)) {
         if (KeyEnum.ANALYZE.match(issueSummary) && allDone(KeyEnum.ANALYZE.keys, subIssues)) {
+            statusShould = MainStatusEnum.REVIEW_WAIT.status
+        } else if (KeyEnum.REVIEW.match(issueSummary) && allDone(KeyEnum.REVIEW.keys, subIssues)) {
             statusShould = MainStatusEnum.DEV_WAIT.status
         } else if (KeyEnum.DEV.match(issueSummary) && allDone(KeyEnum.DEV.keys, subIssues)) {
             statusShould = MainStatusEnum.TEST_WAIT.status
