@@ -11,7 +11,7 @@
     <modules>
         <module>demo-atlassian-agent</module>
         <module>demo-atlassian-scriptrunner</module>
-<!--        <module>demo-atlassian-scriptrunner-samples</module>-->
+        <!--        <module>demo-atlassian-scriptrunner-samples</module>-->
     </modules>
 
 
@@ -20,13 +20,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-
         <!-- JDK 版本-->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
         <java.version>8</java.version>
         <encoding>UTF-8</encoding>
+        <!---->
+        <!---->
+        <!---->
+        <jira.version>6.4.4</jira.version>
+        <groovy.version>3.0.4</groovy.version>
     </properties>
 
     <dependencies>
@@ -37,6 +40,39 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-api</artifactId>
+                <version>${jira.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-core</artifactId>
+                <version>${jira.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>jta</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>jndi</groupId>
+                        <artifactId>jndi</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!-- 默认行为 -->
     <build>
@@ -55,33 +91,21 @@
                 </configuration>
             </plugin>
 
-            <!-- war 包的行为 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version>
-                <configuration>
-                    <!-- war 没有 web.xml 编译通过 -->
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-
         </plugins>
     </build>
 
     <repositories>
+
+        <repository>
+            <id>atlassian</id>
+            <url>https://packages.atlassian.com/maven-external/</url>
+        </repository>
+
         <repository>
             <id>aliyun</id>
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
+
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>aliyun</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 
 </project>
