@@ -1,5 +1,5 @@
-baseURL: https://hello-world-example.github.io/Leader/
-title: Leader
+baseURL: https://hello-world-example.github.io/Atlassian/
+title: Atlassian
 theme: book
 publishDir: "../docs"
 
@@ -45,7 +45,7 @@ params:
 
   # Set source repository location.
   # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo: https://github.com/hello-world-example/Leader
+  BookRepo: https://github.com/hello-world-example/Atlassian
 
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.

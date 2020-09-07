@@ -3,33 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/_sidebar/</loc>
-    <lastmod>2020-01-27T20:04:19+08:00</lastmod>
+    <loc>https://hello-world-example.github.io/Atlassian/_sidebar/</loc>
+    <lastmod>2020-08-20T14:26:40+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/docs/Atlassian/</loc>
+    <loc>https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/</loc>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/docs/Atlassian/Jira/JQL/</loc>
+    <loc>https://hello-world-example.github.io/Atlassian/docs/Jira/JQL/</loc>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/categories/</loc>
+    <loc>https://hello-world-example.github.io/Atlassian/docs/Jira/Workflow/</loc>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/docs/</loc>
+    <loc>https://hello-world-example.github.io/Atlassian/docs/ScriptRunner/</loc>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/</loc>
-    <lastmod>2020-01-27T20:04:19+08:00</lastmod>
+    <loc>https://hello-world-example.github.io/Atlassian/</loc>
+    <lastmod>2020-07-20T15:14:39+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://hello-world-example.github.io/Leader/tags/</loc>
+    <loc>https://hello-world-example.github.io/Atlassian/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Atlassian/docs/</loc>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/Atlassian/tags/</loc>
   </url>
   
 </urlset>

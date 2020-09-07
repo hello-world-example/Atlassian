@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Docker 方式安装 Jira 6.4.4 老版本 Dockerfile ARG JDK_VERSION=8u102 ARG JIRA_PRODUCT=jira ARG JIRA_VERSION=6.4.4ARG AGENT_VERSION=1.2.2# 归档下载 https://www.atlassian.com/zh/software/jira/download-archives# https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.4.4.tar.gzFROMopenjdk:${JDK_VERSION}## Env#ENV JIRA_HOME=/opt/data/jiraENV JIRA_INSTALL=/opt/websuite/jiraRUN mkdir -p ${JIRA_INSTALL} ${JIRA_HOME}ENV JIRA_USER=jira ENV JIRA_GROUP=jira ENV JAVA_OPTS=&#34;-Xms1024m -Xmx1024m&#34;## Jira## RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -LCOPY build/atlassian-jira-6.4.4.tar.gz /tmp/atlassian.tar.gzRUN tar zxvf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1RUN rm -f /tmp/atlassian.tar.gzRUN echo &#34;jira.home = ${JIRA_HOME}&#34; &gt; ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties## Crack## COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/atlassian-agent.jarRUN curl -o ${JIRA_INSTALL}/atlassian-agent.jar https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 解决 Invalid byte tag in constant pool: 19 问题，https://www."><meta property="og:title" content="" />
+<meta property="og:description" content="Docker 方式安装 Jira 6.4.4 老版本 Dockerfile ARG JDK_VERSION=8u102 ARG JIRA_PRODUCT=jira ARG JIRA_VERSION=6.4.4ARG AGENT_VERSION=1.2.2# 归档下载 https://www.atlassian.com/zh/software/jira/download-archives# https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.4.4.tar.gzFROMopenjdk:${JDK_VERSION}## Env#ENV JIRA_HOME=/opt/data/jiraENV JIRA_INSTALL=/opt/websuite/jiraRUN mkdir -p ${JIRA_INSTALL} ${JIRA_HOME}ENV JIRA_USER=jira ENV JIRA_GROUP=jira ENV JAVA_OPTS=&#34;-Xms1024m -Xmx1024m&#34;## Jira## RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -LCOPY build/atlassian-jira-6.4.4.tar.gz /tmp/atlassian.tar.gzRUN tar zxvf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1RUN rm -f /tmp/atlassian.tar.gzRUN echo &#34;jira.home = ${JIRA_HOME}&#34; &gt; ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties## Crack## COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/atlassian-agent.jarRUN curl -o ${JIRA_INSTALL}/atlassian-agent.jar https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 解决 Invalid byte tag in constant pool: 19 问题，https://www." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/" />
+
+<title>Install Jira by Docker | Atlassian</title>
+<link rel="icon" href="/Atlassian/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/Atlassian/book.min.d436f463c9471cfab26a8b71cd2f50b6abf5225806391453da4ca111d1834fef.css" integrity="sha256-1Db0Y8lHHPqyaotxzS9Qtqv1IlgGORRT2kyhEdGDT&#43;8=">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/Atlassian"><span>Atlassian</span>
+  </a>
+</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Plugin</strong>
+<ul>
+<li>
+  <a href="/Atlassian/docs/ScriptRunner/">ScriptRunner</a></li>
+</ul>
+</li>
+<li><strong>Jira</strong>
+<ul>
+<li>
+  <a href="/Atlassian/docs/Jira/Install-Jira-By-Docker/"class=active>Docker 方式安装</a></li>
+<li>
+  <a href="/Atlassian/docs/Jira/JQL/"> JQL</a></li>
+<li>
+  <a href="/Atlassian/docs/Jira/Workflow/"> 工作流</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/Atlassian/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Install Jira by Docker</strong>
+
+  <label for="toc-control">
+    <img src="/Atlassian/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-方式安装-jira">Docker 方式安装 Jira</a>
+      <ul>
+        <li><a href="#644-老版本-dockerfile">6.4.4 老版本 Dockerfile</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="docker-方式安装-jira">Docker 方式安装 Jira</h1>
+<h2 id="644-老版本-dockerfile">6.4.4 老版本 Dockerfile</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#66d9ef">ARG</span> JDK_VERSION<span style="color:#f92672">=</span>8u102
+<span style="color:#66d9ef">ARG</span> JIRA_PRODUCT<span style="color:#f92672">=</span>jira
+<span style="color:#66d9ef">ARG</span> JIRA_VERSION<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span>.4.4<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ARG</span> AGENT_VERSION<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>.2.2<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 归档下载 https://www.atlassian.com/zh/software/jira/download-archives</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#         https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.4.4.tar.gz</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> openjdk:${JDK_VERSION}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Env</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> JIRA_HOME<span style="color:#f92672">=</span>/opt/data/jira<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> JIRA_INSTALL<span style="color:#f92672">=</span>/opt/websuite/jira<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> mkdir -p <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>JIRA_HOME<span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> JIRA_USER<span style="color:#f92672">=</span>jira
+<span style="color:#66d9ef">ENV</span> JIRA_GROUP<span style="color:#f92672">=</span>jira
+<span style="color:#66d9ef">ENV</span> JAVA_OPTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-Xms1024m -Xmx1024m&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Jira</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -L</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> build/atlassian-jira-6.4.4.tar.gz /tmp/atlassian.tar.gz<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> tar zxvf /tmp/atlassian.tar.gz -C <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/ --strip-components <span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> rm -f /tmp/atlassian.tar.gz<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> echo <span style="color:#e6db74">&#34;jira.home = </span><span style="color:#e6db74">${</span>JIRA_HOME<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> &gt; <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/atlassian-jira/WEB-INF/classes/jira-application.properties<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Crack</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/atlassian-agent.jar</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> curl -o <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/atlassian-agent.jar https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 解决 Invalid byte tag in constant pool: 19 问题，https://www.cnblogs.com/klbc/p/12025002.html</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> sed -i <span style="color:#e6db74">&#39;s/.DefaultJarScanner.jarsToSkip=/.DefaultJarScanner.jarsToSkip=atlassian-agent.jar,/&#39;</span> <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/conf/catalina.properties<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> JAVA_OPTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>JAVA_OPTS<span style="color:#e6db74">}</span><span style="color:#e6db74"> -javaagent:</span><span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span><span style="color:#e6db74">/atlassian-agent.jar&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># User Auth</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> export CONTAINER_USER<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>JIRA_USER<span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> export CONTAINER_GROUP<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>JIRA_GROUP<span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> groupadd -r <span style="color:#e6db74">${</span>JIRA_GROUP<span style="color:#e6db74">}</span> <span style="color:#f92672">&amp;&amp;</span> useradd -r -g <span style="color:#e6db74">${</span>JIRA_GROUP<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>JIRA_USER<span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> chown -R <span style="color:#e6db74">${</span>JIRA_USER<span style="color:#e6db74">}</span>:<span style="color:#e6db74">${</span>JIRA_GROUP<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span> <span style="color:#e6db74">${</span>JIRA_HOME<span style="color:#e6db74">}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Info</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 8080</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">VOLUME</span><span style="color:#e6db74"> ${JIRA_HOME}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> ${JIRA_USER}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Work</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> ${JIRA_INSTALL}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># -fg 指定 JIRA 前台运行</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> [<span style="color:#e6db74">&#34;./bin/start-jira.sh&#34;</span>, <span style="color:#e6db74">&#34;-fg&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 重新构建</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># docker kill jira ;; docker rm jira ;; docker rmi kail/jira:6.4.4</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 构建</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># docker build -t kail/jira:6.4.4 .</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># docker run -d -p 8080:8080 --name jira kail/jira:6.4.4</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># docker logs jira -f</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Crack</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># docker exec -it jira bash</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># java -jar atlassian-agent.jar -d -m test@test.com -n BAT -p jira -o http://localhost -s BJGV-9DWN-HRON-R05Z</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="read-more">Read More</h2>
+<ul>
+<li>
+  <a href="https://github.com/ChampagneCui/atlassian-agent">ChampagneCui/atlassian-agent</a></li>
+<li>
+  <a href="https://hub.docker.com/r/atlassian/jira-software">atlassian/jira-software</a></li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex justify-between">
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hello-world-example/Atlassian/edit/master/HuGo/content/docs/Jira/Install-Jira-By-Docker.md" target="_blank" rel="noopener">
+      <img src="/Atlassian/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>Edit this page</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-方式安装-jira">Docker 方式安装 Jira</a>
+      <ul>
+        <li><a href="#644-老版本-dockerfile">6.4.4 老版本 Dockerfile</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

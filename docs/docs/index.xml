@@ -1,13 +1,49 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docs on Leader</title>
-    <link>https://hello-world-example.github.io/Leader/docs/</link>
-    <description>Recent content in Docs on Leader</description>
+    <title>Docs on Atlassian</title>
+    <link>https://hello-world-example.github.io/Atlassian/docs/</link>
+    <description>Recent content in Docs on Atlassian</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	<atom:link href="https://hello-world-example.github.io/Leader/docs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hello-world-example.github.io/Atlassian/docs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/</guid>
+      <description>Docker 方式安装 Jira 6.4.4 老版本 Dockerfile ARG JDK_VERSION=8u102 ARG JIRA_PRODUCT=jira ARG JIRA_VERSION=6.4.4ARG AGENT_VERSION=1.2.2# 归档下载 https://www.atlassian.com/zh/software/jira/download-archives# https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.4.4.tar.gzFROMopenjdk:${JDK_VERSION}## Env#ENV JIRA_HOME=/opt/data/jiraENV JIRA_INSTALL=/opt/websuite/jiraRUN mkdir -p ${JIRA_INSTALL} ${JIRA_HOME}ENV JIRA_USER=jira ENV JIRA_GROUP=jira ENV JAVA_OPTS=&amp;#34;-Xms1024m -Xmx1024m&amp;#34;## Jira## RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -LCOPY build/atlassian-jira-6.4.4.tar.gz /tmp/atlassian.tar.gzRUN tar zxvf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1RUN rm -f /tmp/atlassian.tar.gzRUN echo &amp;#34;jira.home = ${JIRA_HOME}&amp;#34; &amp;gt; ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties## Crack## COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/atlassian-agent.jarRUN curl -o ${JIRA_INSTALL}/atlassian-agent.jar https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 解决 Invalid byte tag in constant pool: 19 问题，https://www.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Atlassian/docs/Jira/JQL/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Atlassian/docs/Jira/JQL/</guid>
+      <description>JQL 基本概念 语法结构 -- fields(project) -- operator(=) -- value(&amp;#34;TEST&amp;#34;)  -- keyword(AND)  -- fields(assignee) -- operator(=) -- function(currentuser())  project = &amp;#34;TEST&amp;#34; AND assignee = currentuser() 保留字  space (&amp;quot; &amp;quot;) + . , ; ? | * / % ^ $ # @ [ ] 这些字符是保留字 如果需要查询这些字符， 需要使用两个反斜杠转义  Fields ✔️    Advanced search reference - JQL fields  Search syntax for text fields    自定义字段 /secure/admin/ViewCustomFields.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Atlassian/docs/Jira/Workflow/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Atlassian/docs/Jira/Workflow/</guid>
+      <description>Workflow 工作流 transition  触发器（Triggers ）： 与 Atlassian 的其他产品之间互通 触发条件（Conditions） ： 不满足条件，则指定的按钮不显示 校验条件（Validator）： 不满足条件，显示提示信息 后置处理器（Post Function）： 状态变更后执行的操作  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/Atlassian/docs/ScriptRunner/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/Atlassian/docs/ScriptRunner/</guid>
+      <description>ScriptRunner 开发环境    scriptrunner-samples   Read More   ScriptRunner 官方文档  ScriptRunner For Jira   Custom Workflow Functions [ issue、transientVars ]  Post Functions Examples    ScriptRunner 脚本商店  Jira Java API 6.4.4  </description>
+    </item>
     
   </channel>
 </rss>
