@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jira Software 7.13.15 Crack Dockerfile ARG VERSION=7.13.15-ubuntuFROMatlassian/jira-software:${VERSION}USERrootENV JIRA_INSTALL=/opt/atlassian/jiraENV AGENT_NAME=atlassian-agent.jar# 将代理破解包加入容器RUN curl -o ${JIRA_INSTALL}/${AGENT_NAME} https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 如果下载好了，可通过以下方式代替# COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/${AGENT_NAME}# 设置启动加载代理包RUN echo &#39;export CATALINA_OPTS=&#34;-javaagent:${JIRA_INSTALL}/${AGENT_NAME} ${CATALINA_OPTS}&#34;&#39; &gt;&gt; ${JIRA_INSTALL}/bin/setenv.sh启动 $ docker build -t kail/jira-software:7.13.15-crack . $ docker run -d \  -p 8080:8080 \  -e TZ=&#34;Asia/Shanghai&#34; \  -v /opt/data/atlassian:/var/atlassian \  --name jira7 \  kail/jira-software:7.13.15-crack $ docker logs -f jira7 Crack  打开 http://localhost:8080， 进入设置步骤 选择语言 将设置它自己 请指定您的许可证关键字 记录 服务器ID：XXXX-XXXX-XXXX-XXXX  $ docker exec -it jira7 bash $ cd /opt/atlassian/jira/ # 查看帮助 $ java -jar atlassian-agent."><meta property="og:title" content="" />
+<meta property="og:description" content="Jira Software 7.13.15 Crack Dockerfile ARG VERSION=7.13.15-ubuntuFROMatlassian/jira-software:${VERSION}USERrootENV JIRA_INSTALL=/opt/atlassian/jiraENV AGENT_NAME=atlassian-agent.jar# 将代理破解包加入容器RUN curl -o ${JIRA_INSTALL}/${AGENT_NAME} https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 如果下载好了，可通过以下方式代替# COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/${AGENT_NAME}# 设置启动加载代理包RUN echo &#39;export CATALINA_OPTS=&#34;-javaagent:${JIRA_INSTALL}/${AGENT_NAME} ${CATALINA_OPTS}&#34;&#39; &gt;&gt; ${JIRA_INSTALL}/bin/setenv.sh启动 $ docker build -t kail/jira-software:7.13.15-crack . $ docker run -d \  -p 8080:8080 \  -e TZ=&#34;Asia/Shanghai&#34; \  -v /opt/data/atlassian:/var/atlassian \  --name jira7 \  kail/jira-software:7.13.15-crack $ docker logs -f jira7 Crack  打开 http://localhost:8080， 进入设置步骤 选择语言 将设置它自己 请指定您的许可证关键字 记录 服务器ID：XXXX-XXXX-XXXX-XXXX  $ docker exec -it jira7 bash $ cd /opt/atlassian/jira/ # 查看帮助 $ java -jar atlassian-agent." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hello-world-example.github.io/Atlassian/docs/Jira/7.13.15-Crack/" />
+
+<title>7.13.15 Crack | Atlassian</title>
+<link rel="icon" href="/Atlassian/favicon.png" type="image/x-icon">
+
+
+<link rel="stylesheet" href="/Atlassian/book.min.d436f463c9471cfab26a8b71cd2f50b6abf5225806391453da4ca111d1834fef.css" integrity="sha256-1Db0Y8lHHPqyaotxzS9Qtqv1IlgGORRT2kyhEdGDT&#43;8=">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/Atlassian"><span>Atlassian</span>
+  </a>
+</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Plugin</strong>
+<ul>
+<li>
+  <a href="/Atlassian/docs/ScriptRunner/">ScriptRunner</a></li>
+</ul>
+</li>
+<li><strong>Jira</strong>
+<ul>
+<li>
+  <a href="/Atlassian/docs/Jira/7.13.15-Crack/"class=active>7.13.15 Crack</a></li>
+<li>
+  <a href="/Atlassian/docs/Jira/JQL/"> JQL</a></li>
+<li>
+  <a href="/Atlassian/docs/Jira/Workflow/"> 工作流</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/Atlassian/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>7.13.15 Crack</strong>
+
+  <label for="toc-control">
+    <img src="/Atlassian/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jira-software-71315-crack">Jira Software 7.13.15 Crack</a>
+      <ul>
+        <li><a href="#dockerfile">Dockerfile</a></li>
+        <li><a href="#启动">启动</a></li>
+        <li><a href="#crack">Crack</a></li>
+        <li><a href="#插件-crack">插件 Crack</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="jira-software-71315-crack">Jira Software 7.13.15 Crack</h1>
+<h2 id="dockerfile">Dockerfile</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#66d9ef">ARG</span> VERSION<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span>.13.15-ubuntu<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> atlassian/jira-software:${VERSION}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> root</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> JIRA_INSTALL<span style="color:#f92672">=</span>/opt/atlassian/jira<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENV</span> AGENT_NAME<span style="color:#f92672">=</span>atlassian-agent.jar<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 将代理破解包加入容器</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> curl -o <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>AGENT_NAME<span style="color:#e6db74">}</span> https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 如果下载好了，可通过以下方式代替</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/${AGENT_NAME}</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># 设置启动加载代理包</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> echo <span style="color:#e6db74">&#39;export CATALINA_OPTS=&#34;-javaagent:${JIRA_INSTALL}/${AGENT_NAME} ${CATALINA_OPTS}&#34;&#39;</span> &gt;&gt; <span style="color:#e6db74">${</span>JIRA_INSTALL<span style="color:#e6db74">}</span>/bin/setenv.sh<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><h2 id="启动">启动</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker build -t kail/jira-software:7.13.15-crack .
+
+$ docker run -d <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -p 8080:8080 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -e TZ<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Asia/Shanghai&#34;</span> <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -v /opt/data/atlassian:/var/atlassian <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --name jira7 <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    kail/jira-software:7.13.15-crack
+
+$ docker logs -f jira7
+</code></pre></div><h2 id="crack">Crack</h2>
+<ul>
+<li>打开 http://localhost:8080， 进入设置步骤</li>
+<li>选择语言</li>
+<li>将设置它自己</li>
+<li>请指定您的许可证关键字</li>
+<li>记录 服务器ID：XXXX-XXXX-XXXX-XXXX</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker exec -it jira7 bash
+$ cd /opt/atlassian/jira/
+
+<span style="color:#75715e"># 查看帮助</span>
+$ java -jar atlassian-agent.jar 
+
+<span style="color:#75715e"># 生成 License</span>
+$ java -jar atlassian-agent.jar -d <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -p jira  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -m test@test.com <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -n Kail <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -o hello-world-example <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -s XXXX-XXXX-XXXX-XXXX
+</code></pre></div><h2 id="插件-crack">插件 Crack</h2>
+<blockquote>
+<ul>
+<li>以 
+  <a href="https://marketplace.atlassian.com/apps/6820/scriptrunner-for-jira/version-history">ScriptRunner</a> 为例，下载 6.5.0</li>
+<li>Jira 》 管理应用 》 上传应用， 之后 在管理应用中找到 <strong>ScriptRunner</strong>，然后展开，复制 <strong>应用秘钥</strong> 作为 <code>-p</code> 参数</li>
+<li>Jira 》 系统 》 系统信息(/secure/admin/ViewSystemInfo.jspa)，找到 <strong>服务器 ID</strong>， 作为 <code>-s</code> 参数</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">java -jar atlassian-agent.jar -d <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -p com.onresolve.jira.groovy.groovyrunner  <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -m test@test.com <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -n Kail <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -o hello-world-example <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -s XXXX-XXXX-XXXX-XXXX
+</code></pre></div><h2 id="read-more">Read More</h2>
+<ul>
+<li>
+  <a href="https://github.com/ChampagneCui/atlassian-agent">ChampagneCui/atlassian-agent</a> Crack 仓库</li>
+<li>
+  <a href="https://hub.docker.com/r/atlassian/jira-software">atlassian/jira-software</a> 官方 Docker 镜像</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex justify-between">
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hello-world-example/Atlassian/edit/master/HuGo/content/docs/Jira/7.13.15-Crack.md" target="_blank" rel="noopener">
+      <img src="/Atlassian/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>Edit this page</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#jira-software-71315-crack">Jira Software 7.13.15 Crack</a>
+      <ul>
+        <li><a href="#dockerfile">Dockerfile</a></li>
+        <li><a href="#启动">启动</a></li>
+        <li><a href="#crack">Crack</a></li>
+        <li><a href="#插件-crack">插件 Crack</a></li>
+        <li><a href="#read-more">Read More</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

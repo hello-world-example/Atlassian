@@ -11,11 +11,11 @@
     
     <item>
       <title></title>
-      <link>https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/</link>
+      <link>https://hello-world-example.github.io/Atlassian/docs/Jira/7.13.15-Crack/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hello-world-example.github.io/Atlassian/docs/Jira/Install-Jira-By-Docker/</guid>
-      <description>Docker 方式安装 Jira 6.4.4 老版本 Dockerfile ARG JDK_VERSION=8u102 ARG JIRA_PRODUCT=jira ARG JIRA_VERSION=6.4.4ARG AGENT_VERSION=1.2.2# 归档下载 https://www.atlassian.com/zh/software/jira/download-archives# https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-6.4.4.tar.gzFROMopenjdk:${JDK_VERSION}## Env#ENV JIRA_HOME=/opt/data/jiraENV JIRA_INSTALL=/opt/websuite/jiraRUN mkdir -p ${JIRA_INSTALL} ${JIRA_HOME}ENV JIRA_USER=jira ENV JIRA_GROUP=jira ENV JAVA_OPTS=&amp;#34;-Xms1024m -Xmx1024m&amp;#34;## Jira## RUN curl -o /tmp/atlassian.tar.gz https://product-downloads.atlassian.com/software/jira/downloads/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.tar.gz -LCOPY build/atlassian-jira-6.4.4.tar.gz /tmp/atlassian.tar.gzRUN tar zxvf /tmp/atlassian.tar.gz -C ${JIRA_INSTALL}/ --strip-components 1RUN rm -f /tmp/atlassian.tar.gzRUN echo &amp;#34;jira.home = ${JIRA_HOME}&amp;#34; &amp;gt; ${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties## Crack## COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/atlassian-agent.jarRUN curl -o ${JIRA_INSTALL}/atlassian-agent.jar https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 解决 Invalid byte tag in constant pool: 19 问题，https://www.</description>
+      <guid>https://hello-world-example.github.io/Atlassian/docs/Jira/7.13.15-Crack/</guid>
+      <description>Jira Software 7.13.15 Crack Dockerfile ARG VERSION=7.13.15-ubuntuFROMatlassian/jira-software:${VERSION}USERrootENV JIRA_INSTALL=/opt/atlassian/jiraENV AGENT_NAME=atlassian-agent.jar# 将代理破解包加入容器RUN curl -o ${JIRA_INSTALL}/${AGENT_NAME} https://github.com/keygood/atlassian-agent/releases/download/v1.2.3/atlassian-agent.jar -L# 如果下载好了，可通过以下方式代替# COPY build/atlassian-agent-1.2.3.jar ${JIRA_INSTALL}/${AGENT_NAME}# 设置启动加载代理包RUN echo &amp;#39;export CATALINA_OPTS=&amp;#34;-javaagent:${JIRA_INSTALL}/${AGENT_NAME} ${CATALINA_OPTS}&amp;#34;&amp;#39; &amp;gt;&amp;gt; ${JIRA_INSTALL}/bin/setenv.sh启动 $ docker build -t kail/jira-software:7.13.15-crack . $ docker run -d \  -p 8080:8080 \  -e TZ=&amp;#34;Asia/Shanghai&amp;#34; \  -v /opt/data/atlassian:/var/atlassian \  --name jira7 \  kail/jira-software:7.13.15-crack $ docker logs -f jira7 Crack  打开 http://localhost:8080， 进入设置步骤 选择语言 将设置它自己 请指定您的许可证关键字 记录 服务器ID：XXXX-XXXX-XXXX-XXXX  $ docker exec -it jira7 bash $ cd /opt/atlassian/jira/ # 查看帮助 $ java -jar atlassian-agent.</description>
     </item>
     
     <item>
