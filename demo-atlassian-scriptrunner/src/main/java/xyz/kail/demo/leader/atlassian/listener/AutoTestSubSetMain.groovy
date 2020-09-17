@@ -1,4 +1,4 @@
-package xyz.kail.demo.leader.atlassian.workflow
+package xyz.kail.demo.leader.atlassian.listener
 
 import com.atlassian.jira.component.ComponentAccessor
 import com.atlassian.jira.issue.Issue
@@ -15,6 +15,7 @@ import com.atlassian.jira.issue.util.DefaultIssueChangeHolder
  */
 // region 代码提示
 Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+//Issue issue = event.issue
 // endregion
 
 // 只针对子任务
@@ -59,6 +60,13 @@ if (null == modifiedValue) {
 
 // 更新 Parent 字段值
 autoTestField.updateValue(null, parentIssue, modifiedValue, new DefaultIssueChangeHolder())
+
+// 查找有 【测试任务】 的子任务，并赋值
+parentIssue.subTaskObjects.each { subTask ->
+    if (subTask.summary.contains("【测试任务】")) {
+        autoTestField.updateValue(null, subTask, modifiedValue, new DefaultIssueChangeHolder())
+    }
+}
 
 /**
  *
