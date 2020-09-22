@@ -13,7 +13,7 @@ import com.atlassian.jira.workflow.WorkflowTransitionUtil
 import com.atlassian.jira.workflow.WorkflowTransitionUtilImpl
 
 // region 代码提示
-// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+ Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion
 
 
@@ -21,6 +21,8 @@ import com.atlassian.jira.workflow.WorkflowTransitionUtilImpl
 final String OPT_KEY = "auto.robot"
 // 父项目标签检测（空字符串时不检测）
 final String LABEL_CHECK = ""
+// 有该标签的不进行操作
+final String LABEL_IGNORE = "禁用机器人"
 
 // 不自动修改状态的项目
 if (["AUTOTEST"].contains(issue.projectObject.key)) {
@@ -29,6 +31,10 @@ if (["AUTOTEST"].contains(issue.projectObject.key)) {
 
 // 子任务
 if (issue.subTask) {
+    // 有 禁用机器人 标签的不进行操作
+    if (issue.parentObject.labels.collect { it.label }.contains(LABEL_IGNORE)) {
+        return
+    }
     if (LABEL_CHECK != "" && !issue.parentObject.labels.collect { it.label }.contains(LABEL_CHECK)) {
         return
     }
