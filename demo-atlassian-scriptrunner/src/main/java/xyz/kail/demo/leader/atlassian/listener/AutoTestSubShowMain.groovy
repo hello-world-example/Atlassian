@@ -16,13 +16,12 @@ IssueEvent event = null
 // Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion
 
-GenericValue changeLog = event.getChangeLog()
-if (null == changeLog) return
-
-
 Issue issue = event.issue
 // 只针对主任务
 if (issue.subTask) return
+
+GenericValue changeLog = event.getChangeLog()
+if (null == changeLog) return
 
 // 获取变动的字段
 List<GenericValue> childChangeItem = changeLog.getRelated("ChildChangeItem")
