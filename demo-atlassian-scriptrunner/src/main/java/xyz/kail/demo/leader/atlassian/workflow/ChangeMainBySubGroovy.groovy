@@ -13,7 +13,7 @@ import com.atlassian.jira.workflow.WorkflowTransitionUtil
 import com.atlassian.jira.workflow.WorkflowTransitionUtilImpl
 
 // region 代码提示
- Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion
 
 
