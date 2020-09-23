@@ -10,7 +10,7 @@ import com.atlassian.jira.security.groups.GroupManager
  * 有效 Bug 数统计
  */
 // region 代码提示
-Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion 有效
 
 

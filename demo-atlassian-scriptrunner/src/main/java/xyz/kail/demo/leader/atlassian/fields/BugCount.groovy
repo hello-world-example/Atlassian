@@ -9,7 +9,7 @@ import com.atlassian.jira.issue.Issue
 import com.atlassian.jira.issue.link.LinkCollection
 
 // region 代码提示
-Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
 // endregion
 
 def bugProjectKeys = []

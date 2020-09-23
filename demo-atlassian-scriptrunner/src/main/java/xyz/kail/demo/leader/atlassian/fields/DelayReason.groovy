@@ -10,11 +10,11 @@ import java.text.SimpleDateFormat
  * 延期原因
  */
 // region 代码提示
-Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-1")
+// Issue issue = ComponentAccessor.issueManager.getIssueObject("ARCH-98")
 // endregion 有效
 
-def join = "\n ===---==--=-=--==---=== \n"
-//def join = "<br> ===---==--=-=--==---=== <br>"
+// def join = "\n ===---==--=-=--==---=== \n"
+def join = "<br> ===---==--=-=--==---=== <br>"
 
 List<Comment> comments = ComponentAccessor.commentManager.getComments(issue)
 
@@ -33,4 +33,3 @@ if (delayReason.isEmpty()) {
 }
 
 return delayReason.join(join)
-
