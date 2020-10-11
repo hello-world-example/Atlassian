@@ -3,14 +3,10 @@ target
 .idea
 HuGo/themes/book
 
-.idea/
-/node/
-lib
-node_modules
-.gradle
-build
-/docs/build
-/docs/.cache
-/docs/target
-.bundle
-target/
+.project
+.settings
+.classpath
+.factorypath
+
+# 私密信息不提交
+key.properties
