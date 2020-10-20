@@ -31,6 +31,10 @@ SearchService.ParseResult parseResult = searchService.parseQuery(user.directoryU
 if (parseResult.isValid()) {
     def searchResult = searchService.search(user.directoryUser, parseResult.getQuery(), PagerFilter.getUnlimitedFilter())
     searchResult.issues.collect {
+        // 禁用机器人标签不执行
+        if (it.labels.collect { it.label }.contains("禁用机器人")) {
+            return ""
+        }
         if (!it.subTaskObjects.isEmpty()) {
             changeOnSubTaskCreate(it, "上线")
             changeOnSubTaskCreate(it, "需求移交")

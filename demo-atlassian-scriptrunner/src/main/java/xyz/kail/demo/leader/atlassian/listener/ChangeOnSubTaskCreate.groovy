@@ -24,6 +24,11 @@ Issue parentIssue = issue.parentObject
 // 子任务主题
 String summary = issue.getSummary()
 
+// 禁用机器人标签不执行
+if (parentIssue.labels.collect { it.label }.contains("禁用机器人")) {
+    return
+}
+
 /**
  * 自动更新"需求移交时间"，取当前【需求移交】子任务的最晚完成时间
  * 不管父任务的 ”需求移交时间“ 是否已经填过，都进行更新
