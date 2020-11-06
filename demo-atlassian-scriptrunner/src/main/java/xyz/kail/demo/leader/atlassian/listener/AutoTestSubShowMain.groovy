@@ -9,7 +9,7 @@ import com.atlassian.jira.issue.util.DefaultIssueChangeHolder
 import org.ofbiz.core.entity.GenericValue
 
 /**
- * 【当主任务更新的时候】【测试任务】子任务 Auto Test 自动 设置为 父任务的 Auto Test 字段内容
+ * 【当主任务更新的时候】【测试任务/测试执行】子任务 Auto Test 自动 设置为 父任务的 Auto Test 字段内容
  */
 // region 代码提示
 IssueEvent event = null
@@ -37,7 +37,7 @@ if (null == autoTestField) return
 
 // 查找有 【测试任务】 的子任务，并赋值
 issue.subTaskObjects.each { subTask ->
-    if (subTask.summary.contains("【测试任务】")) {
+    if (subTask.summary.contains("【测试任务】") || subTask.summary.contains("【测试执行】")) {
         // 获取 父任务的字段值
         def parentTestValue = issue.getCustomFieldValue(autoTestField)
         def subTestValue = subTask.getCustomFieldValue(autoTestField)

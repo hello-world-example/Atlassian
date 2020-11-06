@@ -61,9 +61,9 @@ if (null == modifiedValue) {
 // 更新 Parent 字段值
 autoTestField.updateValue(null, parentIssue, modifiedValue, new DefaultIssueChangeHolder())
 
-// 查找有 【测试任务】 的子任务，并赋值
+// 查找有 【测试任务/测试执行】 的子任务，并赋值
 parentIssue.subTaskObjects.each { subTask ->
-    if (subTask.summary.contains("【测试任务】")) {
+    if (subTask.summary.contains("【测试任务】") || subTask.summary.contains("【测试执行】")) {
         autoTestField.updateValue(null, subTask, modifiedValue, new DefaultIssueChangeHolder())
     }
 }
